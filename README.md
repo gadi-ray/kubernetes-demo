@@ -23,6 +23,10 @@ Go to http://localhost:8081
 
 ```kubectl get pods```
 
+```kubectl delete pod nginx-replica-set-<POD_ID>```
+
+```kubectl get pods```
+
 ```kubectl scale rs nginx-replica-set --replicas=5```
 
 ```kubectl get pods```
