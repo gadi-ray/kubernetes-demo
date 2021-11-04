@@ -79,11 +79,11 @@ Go to http://localhost:8081 and verify the rollback worked
 
 ## Step 4 - Service
 
-```kubectl apply -f deployment -f service.yaml```
+```kubectl apply -f deployment.yaml -f service.yaml```
 
 ```kubectl get services```
 
-```kubectl describe nginx-service```
+```kubectl describe service nginx-service```
 
 Go to http://localhost:31000
 
