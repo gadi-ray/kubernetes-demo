@@ -175,6 +175,10 @@ Visit http://localhost/nginbix
 
 ```helm install nginx example-chart-0.1.0.tgz --namespace=qa```
 
+```kubectl get pods```
+
+```kubectl get pods --namespace=qa```
+
 ```helm history nginx```
 
 ```helm history nginx --namespace=qa```
@@ -182,6 +186,10 @@ Visit http://localhost/nginbix
 ```helm install nginx example-chart-0.1.0.tgz --namespace=prod --dry-run```
 
 ```helm install nginx example-chart-0.1.0.tgz --namespace=prod```
+
+```kubectl get pods --namespace=prod```
+
+```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
 
 ```helm history nginx --namespace=prod```
 
@@ -191,9 +199,17 @@ Edit `example-chart/Chart.yaml` with `appVersion: "1.21.0"`
 
 ```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod```
 
+```kubectl get pods --namespace=prod```
+
+```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
+
 ```helm history --namespace=prod```
 
 ```helm rollback nginx 1 --namespace=prod```
+
+```kubectl get pods --namespace=prod```
+
+```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
 
 ```helm history nginx --namespace=prod```
 
@@ -201,8 +217,4 @@ Edit `example-chart/Chart.yaml` with `appVersion: "1.21.0"`
 
 ```helm delete nginx --namespace=prod``` 
 
-```kubectl delete -f nginx-ingress.yaml```
-
 ```kubectl delete ns qa prod```
-
-
