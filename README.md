@@ -155,7 +155,7 @@ Visit http://localhost/nginbix
 
 ```helm rollback nginbix 1```
 
-```helm history```
+```helm history nginbix```
 
 Visit http://localhost/nginbix
 
@@ -175,19 +175,19 @@ Visit http://localhost/nginbix
 
 ```helm install nginx example-chart-0.1.0.tgz --namespace=qa```
 
-```helm history```
+```helm history nginx```
 
-```helm history --namespace=qa```
+```helm history nginx --namespace=qa```
 
 ```helm install nginx example-chart-0.1.0.tgz --namespace=prod --dry-run```
 
 ```helm install nginx example-chart-0.1.0.tgz --namespace=prod```
 
-```helm history --namespace=prod```
+```helm history nginx --namespace=prod```
+
+Edit `exaple-chart/Chart.yaml` with `appVersion=1.21.0`
 
 ```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod --dry-run```
-
-```helm history --namespace=prod```
 
 ```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod```
 
@@ -195,7 +195,7 @@ Visit http://localhost/nginbix
 
 ```helm rollback nginx 1 --namespace=prod```
 
-```helm history --namespace=prod```
+```helm history nginx --namespace=prod```
 
 ```helm delete nginx --namespace=qa```
 
