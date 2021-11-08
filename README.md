@@ -185,7 +185,7 @@ Visit http://localhost/nginbix
 
 ```helm history nginx --namespace=prod```
 
-Edit `example-chart/Chart.yaml` with `appVersion=1.21.0`
+Edit `example-chart/Chart.yaml` with `appVersion: "1.21.0"`
 
 ```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod --dry-run```
 
