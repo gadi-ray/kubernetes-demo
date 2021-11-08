@@ -123,39 +123,29 @@ Visit http://localhost/bla
 
 ```kubectl delete -f ./nginbix/deployment.yaml -f ./nginx/deployment.yaml```
 
-## Step 6 - nginx Helm
+## Step 6 - Helm
 
 ```brew install helm```
 
-```helm install nginx nginx-chart --dry-run```
+```helm install nginx example-chart --dry-run```
 
-```helm install nginx nginx-chart```
-
-```helm list```
-
-```kubectl apply -f nginx-ingress.yaml```
-
-Visit http://localhost/nginx
-
-```kubectl delete -f nginx-ingress.yaml```
-
-```helm delete nginx```
-
-## Step 6 - template Helm
-
-```helm install nginx template-chart --dry-run```
-
-```helm install nginx template-chart```
-
-```helm install nginbix template-chart```
-
-```helm list```
-
-```helm history```
-
-```helm upgrade nginbix template-chart --set replicaCount=5,image.repository=bmoshe/static-content-per-pod,image.tag="latest"```
+```helm install nginx example-chart```
 
 ```kubectl get pods```
+
+```helm list```
+
+```helm install nginbix example-chart --set replicaCount=5```
+
+```kubectl get pods```
+
+```helm list```
+
+```helm history nginbix```
+
+```helm upgrade nginbix example-chart --set image.repository=bmoshe/static-content-per-pod,image.tag="latest"```
+
+```helm history nginbix```
 
 ```kubectl apply -f nginx-ingress.yaml```
 
@@ -169,14 +159,11 @@ Visit http://localhost/nginbix
 
 Visit http://localhost/nginbix
 
-
-```helm delete nginx```
-
-```helm delete nginbix```
+```helm delete nginx nginbix```
 
 ```kubectl delete -f nginx-ingress.yaml```
 
-## Step 6 - Helm namespaces
+## Step 7 - Helm namespaces
 
 ```kubectl create ns qa```
 
@@ -184,23 +171,25 @@ Visit http://localhost/nginbix
 
 ```kubectl get ns```
 
-```helm package template-chart```
+```helm package example-chart```
 
-```helm install nginx template-chart-0.1.0.tgz --namespace=qa```
+```helm install nginx example-chart-0.1.0.tgz --namespace=qa```
 
 ```helm history```
 
 ```helm history --namespace=qa```
 
-```helm install nginx template-chart-0.1.0.tgz --namespace=prod```
+```helm install nginx example-chart-0.1.0.tgz --namespace=prod --dry-run```
+
+```helm install nginx example-chart-0.1.0.tgz --namespace=prod```
 
 ```helm history --namespace=prod```
 
-```helm upgrade nginx template-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod --dry-run```
+```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod --dry-run```
 
 ```helm history --namespace=prod```
 
-```helm upgrade nginx template-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod```
+```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod```
 
 ```helm history --namespace=prod```
 
@@ -214,7 +203,6 @@ Visit http://localhost/nginbix
 
 ```kubectl delete -f nginx-ingress.yaml```
 
-```kubectl delete ns qa```
+```kubectl delete ns qa prod```
 
-```kubectl delete ns prod```
 
