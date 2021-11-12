@@ -113,11 +113,15 @@ Visit http://localhost:31000 multiple times from incognito to verify multiple po
 
 ```kubectl describe ingress nginx-ingress```
 
-Visit http://localhost/nginx
+```kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80```
 
-Visit http://localhost/nginbix
+Add to ```/ect/hosts``` 127.0.0.1 my-domain.com 
 
-Visit http://localhost/bla
+Visit http://my-domain.com:8080/nginx
+
+Visit http://my-domain.com:8080/nginbix
+
+Visit http://my-domain.com:8080/bla
 
 ```kubectl delete -f nginx-ingress.yaml```
 
@@ -149,15 +153,17 @@ Visit http://localhost/bla
 
 ```kubectl apply -f nginx-ingress.yaml```
 
-Visit http://localhost/nginx
+```kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80```
 
-Visit http://localhost/nginbix
+Visit http://my-domain.com/nginx
+
+Visit http://my-domain.com/nginbix
 
 ```helm rollback nginbix 1```
 
 ```helm history nginbix```
 
-Visit http://localhost/nginbix
+Visit http://my-domain.com/nginbix
 
 ```helm delete nginx nginbix```
 
