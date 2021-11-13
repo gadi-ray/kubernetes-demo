@@ -11,16 +11,16 @@ spec:
     http:
       paths:
         - path: /nginx
-          pathType: Exact
+          pathType: Prefix
           backend:
             service:
               name: nginx-service
               port:
                 number: 8081
-        - path: /nginbix
+        - path: /nginx-guid
           pathType: Prefix
           backend:
             service:
-              name: nginbix-service
+              name: nginx-guid-service
               port:
                 number: 8081

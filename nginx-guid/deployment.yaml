@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginbix-deployment
+  name: nginx-guid-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginbix
+      app: nginx-guid
   template:
     metadata:
       labels:
-        app: nginbix
+        app: nginx-guid
     spec:
       containers:
-      - name: nginbix
-        image: bmoshe/static-content-per-pod:latest
+      - name: nginx-guid
+        image: localhost:5000/nginx-guid:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginbix-service
+  name: nginx-guid-service
 spec:
   ports:
     - port: 8081
       targetPort: 80
   selector:
-    app: nginbix       
+    app: nginx-guid       
