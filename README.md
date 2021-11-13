@@ -55,7 +55,7 @@ Go to http://localhost:8081
 
 ```kubectl get pods```
 
-```kubectl set image deployments/nginx-deployment nginx=bmoshe/static-content-per-pod:latest --record```
+```kubectl set image deployments/nginx-deployment nginx=localhost:5000/nginx-guid:latest --record```
 
 ```kubectl rollout history deployment/nginx-deployment```
 
@@ -63,7 +63,7 @@ Go to http://localhost:8081
 
 ```kubectl port-forward nginx-deployment-<POD_ID> 8081:80```
 
-Go to http://localhost:8081 and see the new nginbix image
+Go to http://localhost:8081 and see the new nginx-guid image
 
 ```kubectl rollout undo deployment/nginx-deployment```
 
@@ -87,7 +87,7 @@ Go to http://localhost:8081 and verify the rollback worked
 
 Go to http://localhost:31000
 
-```kubectl set image deployments/nginx-deployment nginx=bmoshe/static-content-per-pod:latest --record```
+```kubectl set image deployments/nginx-deployment nginx=localhost:5000/nginx-guid:latest --record```
 
 ```kubectl scale deployments/nginx-deployment --replicas=5```
 
@@ -101,7 +101,7 @@ Visit http://localhost:31000 multiple times from incognito to verify multiple po
 
 ```kubectl get pods --namespace=ingress-nginx```
 
-```kubectl apply -f ./nginx/deployment.yaml -f ./nginbix/deployment.yaml```
+```kubectl apply -f ./nginx/deployment.yaml -f ./nginx-guid/deployment.yaml```
 
 ```kubectl get pods```
 
@@ -117,15 +117,17 @@ Visit http://localhost:31000 multiple times from incognito to verify multiple po
 
 Add to ```/ect/hosts``` 127.0.0.1 my-domain.com 
 
+Visit http://localhost:8080/nginx
+
 Visit http://my-domain.com:8080/nginx
 
-Visit http://my-domain.com:8080/nginbix
+Visit http://my-domain.com:8080/nginx-guid
 
 Visit http://my-domain.com:8080/bla
 
 ```kubectl delete -f nginx-ingress.yaml```
 
-```kubectl delete -f ./nginbix/deployment.yaml -f ./nginx/deployment.yaml```
+```kubectl delete -f ./nginx-guid/deployment.yaml -f ./nginx/deployment.yaml```
 
 ## Step 6 - Helm
 
@@ -139,33 +141,33 @@ Visit http://my-domain.com:8080/bla
 
 ```helm list```
 
-```helm install nginbix example-chart --set replicaCount=5```
+```helm install nginx-guid example-chart --set replicaCount=5```
 
 ```kubectl get pods```
 
 ```helm list```
 
-```helm history nginbix```
+```helm history nginx-guid```
 
-```helm upgrade nginbix example-chart --set image.repository=bmoshe/static-content-per-pod,image.tag="latest"```
+```helm upgrade nginx-guid example-chart --set image.repository=localhost:5000/nginx-guid,image.tag="latest"```
 
-```helm history nginbix```
+```helm history nginx-guid```
 
 ```kubectl apply -f nginx-ingress.yaml```
 
 ```kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80```
 
-Visit http://my-domain.com/nginx
+Visit http://my-domain.com:8080/nginx
 
-Visit http://my-domain.com/nginbix
+Visit http://my-domain.com:8080/nginx-guid
 
-```helm rollback nginbix 1```
+```helm rollback nginx-guid 1```
 
-```helm history nginbix```
+```helm history nginx-guid```
 
-Visit http://my-domain.com/nginbix
+Visit http://my-domain.com:8080/nginx-guid
 
-```helm delete nginx nginbix```
+```helm delete nginx nginx-guid```
 
 ```kubectl delete -f nginx-ingress.yaml```
 
