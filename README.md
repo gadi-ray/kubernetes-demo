@@ -173,56 +173,70 @@ Visit http://my-domain.com:8080/nginx-guid
 
 ## Step 7 - Helm namespaces
 
-```kubectl create ns qa```
+```kubectl create ns development```
 
-```kubectl create ns prod```
+```kubectl create ns production```
 
 ```kubectl get ns```
 
-```helm package example-chart```
+```cd example-chart```
 
-```helm install nginx example-chart-0.1.0.tgz --namespace=qa```
+```helm package .```
+
+```ls```
+
+```helm install nginx example-chart-0.1.0.tgz --namespace=development --dry-run```
 
 ```kubectl get pods```
 
-```kubectl get pods --namespace=qa```
+```kubectl get pods --namespace=development```
 
 ```helm history nginx```
 
-```helm history nginx --namespace=qa```
+```helm history nginx --namespace=development```
 
-```helm install nginx example-chart-0.1.0.tgz --namespace=prod --dry-run```
+```helm install nginx example-chart-0.1.0.tgz --namespace=production```
 
-```helm install nginx example-chart-0.1.0.tgz --namespace=prod```
+```kubectl get pods --namespace=production```
 
-```kubectl get pods --namespace=prod```
+```kubectl config get-contexts```
 
-```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
+```kubectl config use-context prod```
 
-```helm history nginx --namespace=prod```
+```kubectl get pods```
+
+```kubectl exec nginx-deployment-<ID> -- nginx -v```
+
+```helm history nginx```
 
 Edit `example-chart/Chart.yaml` with `appVersion: "1.21.0"`
 
-```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod --dry-run```
+```helm package .```
 
-```helm upgrade nginx example-chart --set replicaCount=6,image.tag="1.21.0" --namespace=prod```
+```helm upgrade nginx example-chart-0.1.0.tgz --set replicaCount=6,image.tag="1.21.0" --dry-run```
 
-```kubectl get pods --namespace=prod```
+```helm upgrade nginx example-chart-0.1.0.tgz --set replicaCount=6,image.tag="1.21.0"```
 
-```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
+```kubectl get pods```
 
-```helm history --namespace=prod```
+```kubectl exec nginx-deployment-<ID> -- nginx -v```
 
-```helm rollback nginx 1 --namespace=prod```
+```helm history```
 
-```kubectl get pods --namespace=prod```
+```helm rollback nginx 1```
 
-```kubectl exec nginx-deployment-<ID> --namespace=prod -- nginx -v```
+```kubectl get pods```
 
-```helm history nginx --namespace=prod```
+```kubectl exec nginx-deployment-<ID> -- nginx -v```
 
-```helm delete nginx --namespace=qa```
+```helm history nginx```
 
-```helm delete nginx --namespace=prod``` 
+```helm delete nginx``` 
 
-```kubectl delete ns qa prod```
+```kubectl config use-context dev```
+
+```helm delete nginx```
+
+```kubectl config use-context docker-desktop```
+
+```kubectl delete ns development production```
